@@ -5,6 +5,11 @@ target 'NewsCommentModule' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
+ pod 'Masonry'
+
+pod 'YYModel'
+pod 'AFNetworking'
+pod 'SDWebImage'
   # Pods for NewsCommentModule
 
   target 'NewsCommentModuleTests' do
@@ -16,6 +21,6 @@ target 'NewsCommentModule' do
     # Pods for testing
   end
 
- pod 'Masonry'
+
 
 end

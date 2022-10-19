@@ -1,0 +1,47 @@
+//
+//  PrefixHeader.pch
+//  NewsCommentModule
+//
+//  Created by power on 2022/10/19.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+//----------------------- 屏幕相关 -----------------------
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+
+
+//弱指针self
+#define WeakSelf(weakSelf)  __weak __typeof(&*self)weakSelf = self
+
+//----------------------- 函数宏 -----------------------
+
+//自定义log输出，debug时，正常NSLog输出，release状态，为空，不打印
+#ifdef DEBUG //调试环境
+
+#define XJLog(...) NSLog(__VA_ARGS__)//__VA_ARGS__为调用时传递的参数
+
+#else //发布环境
+
+#define XJLog(...)
+
+#endif
+
+
+
+//----------------------- 公共头文件引用 -----------------------
+#import "NSArray+Safe.h"
+
+
+
+
+
+//-------------------- 第三方类库 --------------------
+#import <Masonry/Masonry.h>
+#import <YYModel/YYModel.h>
+#import <SDWebImage/SDWebImage.h>
+
+#endif /* PrefixHeader_pch */

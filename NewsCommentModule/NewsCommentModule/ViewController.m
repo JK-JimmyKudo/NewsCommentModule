@@ -6,6 +6,7 @@
 //
 
 #import "ViewController.h"
+#import "NewsCommentViewController.h"
 
 @interface ViewController ()
 
@@ -15,7 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+   
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    NewsCommentViewController *viewController = [[NewsCommentViewController alloc] init];
+//    viewController.newsID = self.newsIDTextField.text;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 
