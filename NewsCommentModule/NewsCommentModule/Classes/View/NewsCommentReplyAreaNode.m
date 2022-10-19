@@ -47,7 +47,7 @@
 
         CommentInfoModel *model = [self.replyList safeObjectAtIndex:i];
         
-        XJLog(@"setupCommentItemsArr -- %@",[model yy_modelToJSONObject]);
+//        XJLog(@"setupCommentItemsArr -- %@",[model yy_modelToJSONObject]);
 
         NewsCommentReplyNode *commentReplyNode = [[NewsCommentReplyNode alloc]initWithcommentModel:model floor:i];
 

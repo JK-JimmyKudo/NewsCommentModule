@@ -86,9 +86,25 @@
 
 - (void)loadData
 {
+    
+    
+//    XJLog(@"nickName -- %@",[self.model nickName]);
+//    XJLog(@"toNickName -- %@",[self.model toNickName]);
+
+    
     _nameTextNode.text = [NSString stringWithFormat:@"%@ %@", self.model.nickName ? self.model.nickName : @"火星网友",@"火星"];
     _floorTextNode.text = @"呵呵呵";//[NSString stringWithFormat:@"%@#", @(_floor).stringValue];
-    _contentTextNode.text = @"啦啦啦啦啦啦啦啦啦你的技能菜单级储奶袋集成呢记得上次的时间戳纳斯达克集成呢的时间戳的集成呢内存卡觉得你查看电脑参加考试"; //_commentItem.content ? _commentItem.content : @"NULL";
+    _contentTextNode.text = self.model.replyContent ? self.model.replyContent : @"";
+    
+    
+    if (![self.model.toNickName isEqualToString:@""]) { // XX回复XX
+        _nameTextNode.text = [NSString stringWithFormat:@"%@ 回复 %@",
+              self.model.nickName, self.model.toNickName];
+//        _contentTextNode.text = self.model.replyContent ? self.model.replyContent : @"";
+    }else{
+        _nameTextNode.text = [NSString stringWithFormat:@"%@",
+              self.model.nickName];
+    }
 }
 
 #pragma mark - setter / getter

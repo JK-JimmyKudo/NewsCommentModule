@@ -105,6 +105,14 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
             mod.toUserImageUrl = @"vk_avatar";
             mod.userImageUrl = @"vk_avatar";
             
+            
+            int speed = (arc4random() % 2) + 3;
+//            NSLog(@"list-succ : %d", speed);
+            
+            if (speed == 4) {
+                mod.toNickName = @"";
+            }
+            
             [arr addObject:mod];
         }
         
