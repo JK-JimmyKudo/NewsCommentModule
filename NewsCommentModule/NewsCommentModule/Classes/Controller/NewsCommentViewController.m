@@ -78,7 +78,7 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
 - (void)build {
     
     NSMutableArray *modelData = [NSMutableArray array];
-    for (int i = 0;i < 20;i++) {
+    for (int i = 0;i < 25;i++) {
         MessageInfoModel *messageModel = [[MessageInfoModel alloc] init];
         messageModel.userId = [NSString stringWithFormat:@"100%d",i];
         messageModel.content = @"这里是评论内容哦";
@@ -122,7 +122,6 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
 //        [self.commentTableView reloadData];
     });
     
-    NSLog(@"self.feedEntitySections -- %@",[self.latestCommentArr yy_modelToJSONObject]);
     
 }
 
@@ -204,7 +203,7 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
 {
     NewsCommentCellNode *cell = [NewsCommentCellNode cellWithTableView:tableView];
     if (0 == indexPath.section) {
-        [cell setupCommentItems:_hotComments.comments commmentIds:_hotComments.commentIds[indexPath.row]];
+//        [cell setupCommentItems:_hotComments.comments commmentIds:_hotComments.commentIds[indexPath.row]];
     }else{
 //        [cell setupCommentItems:_latestComments.comments commmentIds:_latestComments.commentIds[indexPath.row]];
        MessageInfoModel *model = [self.latestCommentArr safeObjectAtIndex:indexPath.row];

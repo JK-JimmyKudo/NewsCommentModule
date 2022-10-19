@@ -15,7 +15,6 @@
 #pragma mark - interface
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
-- (void)setupCommentItems:(NSDictionary *)commentItems commmentIds:(NSArray *)commmentIds;
 
 
 -(void)setupCommentItemsModel:(MessageInfoModel *)model;

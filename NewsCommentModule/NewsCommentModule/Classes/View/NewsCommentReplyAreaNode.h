@@ -11,6 +11,8 @@
 @interface NewsCommentReplyAreaNode : UIView
 
 #pragma mark - interface
-- (void)setupCommentItems:(NSDictionary *)commentItems floors:(NSArray *)floors;
+
+
+-(void)setupCommentItemsArr:(NSArray *)replyList;
 
 @end

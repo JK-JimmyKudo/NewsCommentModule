@@ -97,19 +97,7 @@
         make.left.right.equalTo(_nameTextNode);
         make.bottom.equalTo(_imageNode.mas_bottom);
     }];
-    
-//    [_commentReplyAreaNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_imageNode.mas_bottom).offset(10);
-//        make.left.equalTo(_nameTextNode);
-//        make.right.equalTo(_voteBtnNode);
-//    }];
-//
-//    [_contentTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_commentReplyAreaNode.mas_bottom).offset(10);
-//        make.left.equalTo(_nameTextNode);
-//        make.right.equalTo(_voteBtnNode);
-//    }];
-    
+
     
     [_contentTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageNode.mas_bottom).offset(10);
@@ -132,37 +120,6 @@
     }];
 }
 
-#pragma mark - public
-- (void)setupCommentItems:(NSDictionary *)commentItems commmentIds:(NSArray *)commmentIds
-{
-    _commentItemsDict = commentItems;
-    _commentIdsArray = commmentIds;
-//    _commentItem = commentItems[commmentIds.lastObject];
-    
-//    [_imageNode setImageWithURL:[NSURL URLWithString:_commentItem.user.avatar] placeholder:[UIImage imageNamed:@"defult_pho"]];
-    _nameTextNode.text = @"火星网友";//_commentItem.user.nickname ? _commentItem.user.nickname : @"火星网友";
-    _locationTextNode.text = @"地址";//_commentItem.user.location ? _commentItem.user.location : @"火星";
-    [_voteBtnNode setTitle:[NSString stringWithFormat:@"%@顶",@(10)] forState:UIControlStateNormal];
-    _contentTextNode.text = @"评论哈哈哈哈哈哈哈奶茶店能促进看得出的上次你开设赌场内存卡今年初接口的说你菜单据库存电脑查看短时间内出库单今年初几点开始残酷你的课程你点击开车呢内存卡电脑查看冀东水泥从空岛生存";//_commentItem.content;
-    
-    //根据是否有子评论，修改布局
-    
-    NSLog(@"_commentIdsArray -- %@",_commentIdsArray);
-//    if (_commentIdsArray.count > 1) {
-        [_commentReplyAreaNode mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
-            make.left.equalTo(_nameTextNode);
-            make.right.equalTo(_voteBtnNode);
-        }];
-//    }else{
-//        [_contentTextNode mas_remakeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(_imageNode.mas_bottom).offset(10);
-//            make.left.equalTo(_nameTextNode);
-//            make.right.equalTo(_voteBtnNode);
-//        }];
-//    }
-    [_commentReplyAreaNode setupCommentItems:_commentItemsDict floors:_commentIdsArray];
-}
 
 
 
@@ -175,7 +132,26 @@
         _locationTextNode.text = @"地址";//_commentItem.user.location ? _commentItem.user.location : @"火星";
         [_voteBtnNode setTitle:[NSString stringWithFormat:@"%@顶",model.praiseCount] forState:UIControlStateNormal];
         _contentTextNode.text = model.content;
+    
+    
+    NSArray *replyList  = model.replyList;
+    
+        if (replyList.count > 1) {
+            [_commentReplyAreaNode mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
+                make.left.equalTo(_nameTextNode);
+                make.right.equalTo(_voteBtnNode);
+            }];
+        }else{
+            [_contentTextNode mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_imageNode.mas_bottom).offset(10);
+                make.left.equalTo(_nameTextNode);
+                make.right.equalTo(_voteBtnNode);
+            }];
+        }
 
+
+    [_commentReplyAreaNode setupCommentItemsArr:replyList];
 }
 
 
@@ -186,6 +162,8 @@
     if (!_imageNode) {
         UIImageView *imageNode = [[UIImageView alloc] init];
         imageNode.clipsToBounds = YES;
+        imageNode.layer.masksToBounds = YES;
+        imageNode.layer.cornerRadius = 40/2;
         _imageNode = imageNode;
         
     }
@@ -196,7 +174,7 @@
 {
     if (!_nameTextNode) {
         UILabel *nameTextNode = [[UILabel alloc] init];
-        nameTextNode.font = [UIFont systemFontOfSize:14];
+        nameTextNode.font = [UIFont systemFontOfSize:16];
         nameTextNode.textColor = VKColorRGB(186, 177, 161);
         _nameTextNode = nameTextNode;
     }

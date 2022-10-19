@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CommentInfoModel.h"
+
 @class NewsCommentItem;
 @interface NewsCommentReplyNode : UIView
 
 #pragma mark - interface
-- (instancetype)initWithcommentItem:(NewsCommentItem *)commentItem floor:(NSInteger)floor;
+
+
+- (instancetype)initWithcommentModel:(CommentInfoModel *)model floor:(NSInteger)floor;
+
 
 @end

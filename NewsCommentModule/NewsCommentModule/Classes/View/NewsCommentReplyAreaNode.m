@@ -10,7 +10,7 @@
 #import "NewsCommentModel.h"
 #import "NewsCommentReplyNode.h"
 
-//#import "YYKit.h"
+#import "CommentInfoModel.h"
 #import "UIColor+VK.h"
 #import <Masonry/Masonry.h>
 
@@ -20,6 +20,9 @@
 //Data
 @property (nonatomic, strong) NSDictionary *commentItemsDict;
 @property (nonatomic, strong) NSArray *floors;
+
+@property (nonatomic, strong) NSArray *replyList;
+
 @end
 
 @implementation NewsCommentReplyAreaNode
@@ -35,24 +38,29 @@
     return self;
 }
 
+
 #pragma mark - private
-- (void)addSubnodes
+- (void)addNewSubnodes
 {
-    UIView *lastTopView = nil;
-    for (NSInteger i = 0; i < _floors.count - 1; i ++) {
-        NSString *floor = _floors[i];
-        NewsCommentItem *commentItem = _commentItemsDict[floor];
-        NewsCommentReplyNode *commentReplyNode = [[NewsCommentReplyNode alloc] initWithcommentItem:commentItem floor:i + 1];
-        [self addSubview:commentReplyNode];
+    UIView *lastTopView;
+    for (NSInteger i = 0; i < self.replyList.count; i ++) {
+
+        CommentInfoModel *model = [self.replyList safeObjectAtIndex:i];
         
+        XJLog(@"setupCommentItemsArr -- %@",[model yy_modelToJSONObject]);
+
+        NewsCommentReplyNode *commentReplyNode = [[NewsCommentReplyNode alloc]initWithcommentModel:model floor:i];
+
+        [self addSubview:commentReplyNode];
+
         //mas_layout
-        [self mas_subViewsWithIndex:i commentReplyNode:commentReplyNode lastTopView:lastTopView];
+        [self mas_newSubViewsWithIndex:i commentReplyNode:commentReplyNode lastTopView:lastTopView];
         
         lastTopView = commentReplyNode;
     }
 }
 
-- (void)mas_subViewsWithIndex:(NSInteger)index commentReplyNode:(NewsCommentReplyNode *)commentReplyNode lastTopView:(UIView *)lastTopView
+- (void)mas_newSubViewsWithIndex:(NSInteger)index commentReplyNode:(NewsCommentReplyNode *)commentReplyNode lastTopView:(UIView *)lastTopView
 {
     if (0 == index) {
         [commentReplyNode mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -66,22 +74,32 @@
         }];
     }
     
-    if (index == _floors.count - 2) {
+    if (index == self.replyList.count-1) {
         [commentReplyNode mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self);
         }];
     }
 }
 
+
 #pragma mark - public
-- (void)setupCommentItems:(NSDictionary *)commentItems floors:(NSArray *)floors
-{
-    _commentItemsDict = commentItems;
-    _floors = floors;
-    _floors = @[@1,@2,@3];
-//    [self removeAllSubviews];
+
+-(void)setupCommentItemsArr:(NSArray *)replyList{
+    self.replyList = [NSArray array];
+    self.replyList = replyList;
+
+
+    [self removeAllSubviews];
     
-    [self addSubnodes];
+    [self addNewSubnodes];
 }
+- (void)removeAllSubviews {
+    //[self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    while (self.subviews.count) {
+        [self.subviews.lastObject removeFromSuperview];
+    }
+}
+
+
 
 @end

@@ -21,22 +21,29 @@
 //Data
 @property (nonatomic, strong) NewsCommentItem *commentItem;
 @property (nonatomic, assign) NSInteger floor;
+
+@property (nonatomic, strong) CommentInfoModel *model;
+
 @end
 
 @implementation NewsCommentReplyNode
 
-- (instancetype)initWithcommentItem:(NewsCommentItem *)commentItem floor:(NSInteger)floor
-{
+
+- (instancetype)initWithcommentModel:(CommentInfoModel *)model floor:(NSInteger)floor{
+    
+    
     self = [super init];
     if (self) {
-        _commentItem = commentItem;
+        _model = model;
         _floor = floor;
         [self addSubnodes];
         [self mas_subViews];
         [self loadData];
     }
     return self;
+    
 }
+
 
 #pragma mark - private
 - (void)addSubnodes
@@ -79,7 +86,7 @@
 
 - (void)loadData
 {
-    _nameTextNode.text = @"哈哈哈哈";//[NSString stringWithFormat:@"%@ %@", _commentItem.user.nickname ? _commentItem.user.nickname : @"火星网友", _commentItem.user.location ? _commentItem.user.location : @"火星"];
+    _nameTextNode.text = [NSString stringWithFormat:@"%@ %@", self.model.nickName ? self.model.nickName : @"火星网友",@"火星"];
     _floorTextNode.text = @"呵呵呵";//[NSString stringWithFormat:@"%@#", @(_floor).stringValue];
     _contentTextNode.text = @"啦啦啦啦啦啦啦啦啦你的技能菜单级储奶袋集成呢记得上次的时间戳纳斯达克集成呢的时间戳的集成呢内存卡觉得你查看电脑参加考试"; //_commentItem.content ? _commentItem.content : @"NULL";
 }
