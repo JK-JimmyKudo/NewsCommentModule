@@ -252,16 +252,16 @@
 		85A1DCED28FEA7D300CCB8C5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				85A1DCF528FEA7D300CCB8C5 /* NewsCommentCellNode.h */,
-				85A1DCEE28FEA7D300CCB8C5 /* NewsCommentCellNode.m */,
 				85A1DCF028FEA7D300CCB8C5 /* NewsCommentSectionTitleHeader.h */,
 				85A1DCF328FEA7D300CCB8C5 /* NewsCommentSectionTitleHeader.m */,
+				850807492900E384008415B6 /* NewsCommentReplyCellNode.h */,
+				8508074A2900E384008415B6 /* NewsCommentReplyCellNode.m */,
+				85A1DCF528FEA7D300CCB8C5 /* NewsCommentCellNode.h */,
+				85A1DCEE28FEA7D300CCB8C5 /* NewsCommentCellNode.m */,
 				85A1DCF228FEA7D300CCB8C5 /* NewsCommentReplyAreaNode.h */,
 				85A1DCF128FEA7D300CCB8C5 /* NewsCommentReplyAreaNode.m */,
 				85A1DCEF28FEA7D300CCB8C5 /* NewsCommentReplyNode.h */,
 				85A1DCF428FEA7D300CCB8C5 /* NewsCommentReplyNode.m */,
-				850807492900E384008415B6 /* NewsCommentReplyCellNode.h */,
-				8508074A2900E384008415B6 /* NewsCommentReplyCellNode.m */,
 			);
 			path = View;
 			sourceTree = "<group>";

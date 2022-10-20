@@ -7,14 +7,20 @@
 //
 
 #import "NewsCommentSectionTitleHeader.h"
-
+#import "NewsCommentReplyAreaNode.h"
 #import "UIColor+VK.h"
 #import <Masonry/Masonry.h>
 
 @interface NewsCommentSectionTitleHeader ()
 //UI
-@property (nonatomic, strong) UIView *leftLineView;
-@property (nonatomic, strong) UILabel *titleTextLabel;
+@property (nonatomic, strong) UIImageView *imageNode;
+@property (nonatomic, strong) UILabel *nameTextNode;
+@property (nonatomic, strong) UILabel *locationTextNode;
+@property (nonatomic, strong) UIButton *voteBtnNode;
+@property (nonatomic, strong) UILabel *contentTextNode;
+@property (nonatomic, strong) UIView *underLineNode;
+@property (nonatomic, strong) NewsCommentReplyAreaNode *commentReplyAreaNode;
+
 @end
 
 @implementation NewsCommentSectionTitleHeader
@@ -43,54 +49,180 @@
 #pragma mark - private
 - (void)addSubnodes
 {
-    [self.contentView addSubview:self.leftLineView];
+    [self.contentView addSubview:self.imageNode];
     
-    [self.contentView addSubview:self.titleTextLabel];
+    [self.contentView addSubview:self.nameTextNode];
+    
+    [self.contentView addSubview:self.locationTextNode];
+    
+    [self.contentView addSubview:self.voteBtnNode];
+    
+    [self.contentView addSubview:self.contentTextNode];
+    
+    [self.contentView addSubview:self.commentReplyAreaNode];
+    
+    [self.contentView addSubview:self.underLineNode];
 }
 
 - (void)mas_subViews
 {
-    [self.leftLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_offset(3);
-        make.top.equalTo(self.contentView).mas_offset(5);
-        make.left.equalTo(self.contentView).mas_offset(12);
-        make.bottom.equalTo(self.contentView).mas_offset(-5);
+    [_imageNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(40);
+        make.top.equalTo(self.contentView).offset(10);
+        make.left.equalTo(self.contentView).offset(10);
     }];
     
-    [self.titleTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.right.top.equalTo(self.contentView);
-        make.left.equalTo(self.leftLineView.mas_right).mas_offset(8);
+    [_voteBtnNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(20);
+        make.top.equalTo(_imageNode);
+        make.right.equalTo(self.contentView).offset(-10);
+    }];
+    
+    [_nameTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_imageNode);
+        make.left.equalTo(_imageNode.mas_right).offset(10);
+        make.right.equalTo(_voteBtnNode.mas_left).offset(-10);
+    }];
+    
+    [_locationTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(_nameTextNode);
+        make.bottom.equalTo(_imageNode.mas_bottom);
+    }];
+
+    
+    [_contentTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_imageNode.mas_bottom).offset(10);
+        make.left.equalTo(_nameTextNode);
+        make.right.equalTo(_voteBtnNode);
+    }];
+    
+    [_commentReplyAreaNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
+        make.left.equalTo(_nameTextNode);
+        make.right.equalTo(_voteBtnNode);
+    }];
+    
+    
+    
+    [_underLineNode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+        make.top.equalTo(_commentReplyAreaNode.mas_bottom).offset(10);
+        make.left.right.bottom.equalTo(self.contentView);
     }];
 }
 
-#pragma mark - public
-- (void)setTitle:(NSString *)title
-{
-    _title = title;
+-(void)setupCommentItemsModel:(MessageInfoModel *)model{
     
-    _titleTextLabel.text = title;
+    
+    [self.imageNode sd_setImageWithURL:[NSURL URLWithString:model.avatar] placeholderImage:[UIImage imageNamed:@"defult_pho"]];
+    
+    _nameTextNode.text = model.nickName ? model.nickName : @"火星网友";
+        _locationTextNode.text = @"地址";//_commentItem.user.location ? _commentItem.user.location : @"火星";
+        [_voteBtnNode setTitle:[NSString stringWithFormat:@"%@顶",model.praiseCount] forState:UIControlStateNormal];
+        _contentTextNode.text = model.content;
+    
+    
+    NSArray *replyList  = model.replyList;
+    
+        if (replyList.count > 1) {
+            [_commentReplyAreaNode mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
+                make.left.equalTo(_nameTextNode);
+                make.right.equalTo(_voteBtnNode);
+            }];
+        }else{
+            [_contentTextNode mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_imageNode.mas_bottom).offset(10);
+                make.left.equalTo(_nameTextNode);
+                make.right.equalTo(_voteBtnNode);
+            }];
+        }
+
+
+//    [_commentReplyAreaNode setupCommentItemsArr:replyList];
 }
+
+
 
 #pragma mark - setter / getter
-- (UIView *)leftLineView
+- (UIImageView *)imageNode
 {
-    if (!_leftLineView) {
-        UIView *leftLineView = [[UIView alloc] init];
-        leftLineView.backgroundColor = VKColorRGB(218, 85, 107);
-        _leftLineView = leftLineView;
+    if (!_imageNode) {
+        UIImageView *imageNode = [[UIImageView alloc] init];
+        imageNode.clipsToBounds = YES;
+        imageNode.layer.masksToBounds = YES;
+        imageNode.layer.cornerRadius = 40/2;
+        _imageNode = imageNode;
+        
     }
-    return _leftLineView;
+    return _imageNode;
 }
 
-- (UILabel *)titleTextLabel
+- (UILabel *)nameTextNode
 {
-    if (!_titleTextLabel) {
-        UILabel *titleTextLabel = [[UILabel alloc] init];
-        titleTextLabel.textColor = VKColorRGB(155, 155, 155);
-        titleTextLabel.font = [UIFont systemFontOfSize:12];
-        _titleTextLabel = titleTextLabel;
+    if (!_nameTextNode) {
+        UILabel *nameTextNode = [[UILabel alloc] init];
+        nameTextNode.font = [UIFont systemFontOfSize:16];
+        nameTextNode.textColor = VKColorRGB(186, 177, 161);
+        _nameTextNode = nameTextNode;
     }
-    return _titleTextLabel;
+    return _nameTextNode;
 }
+
+- (UILabel *)locationTextNode
+{
+    if (!_locationTextNode) {
+        UILabel *locationTextNode = [[UILabel alloc] init];
+        locationTextNode.font = [UIFont systemFontOfSize:12];
+        locationTextNode.textColor = VKColorRGB(163, 163, 163);
+        _locationTextNode = locationTextNode;
+    }
+    return _locationTextNode;
+}
+
+- (UIButton *)voteBtnNode
+{
+    if (!_voteBtnNode) {
+        UIButton *voteBtnNode = [[UIButton alloc] init];
+        voteBtnNode.titleLabel.font = [UIFont systemFontOfSize:12];
+        [voteBtnNode setTitleColor:VKColorRGB(163, 163, 163) forState:UIControlStateNormal];
+        voteBtnNode.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        _voteBtnNode = voteBtnNode;
+    }
+    return _voteBtnNode;
+}
+
+- (NewsCommentReplyAreaNode *)commentReplyAreaNode
+{
+    if (!_commentReplyAreaNode) {
+        NewsCommentReplyAreaNode *commentReplyAreaNode = [[NewsCommentReplyAreaNode alloc] init];
+        _commentReplyAreaNode = commentReplyAreaNode;
+    }
+    return _commentReplyAreaNode;
+}
+
+- (UILabel *)contentTextNode
+{
+    if (!_contentTextNode) {
+        UILabel *contentTextNode = [[UILabel alloc] init];
+        contentTextNode.numberOfLines = 0;
+        contentTextNode.font = [UIFont systemFontOfSize:14];
+        contentTextNode.textColor = VKColorRGB(50, 50, 50);
+        _contentTextNode = contentTextNode;
+    }
+    return _contentTextNode;
+}
+
+- (UIView *)underLineNode
+{
+    if (!_underLineNode) {
+        UIView *underLineNode = [[UIView alloc] init];
+        underLineNode.backgroundColor = VKColorRGB(222, 222, 222);
+        _underLineNode = underLineNode;
+    }
+    return _underLineNode;
+}
+
 
 @end

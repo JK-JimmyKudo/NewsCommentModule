@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MessageInfoModel.h"
 @interface NewsCommentSectionTitleHeader : UITableViewHeaderFooterView
 #pragma mark - params
 @property (nonatomic, copy) NSString *title;
 
 #pragma mark - interface
 + (instancetype)sectionHeaderWithTableView:(UITableView *)tableView;
-
+-(void)setupCommentItemsModel:(MessageInfoModel *)model;
 @end

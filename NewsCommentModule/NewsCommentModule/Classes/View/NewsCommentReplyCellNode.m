@@ -21,29 +21,8 @@
 @property (nonatomic, strong) UIButton *voteBtnNode;
 @property (nonatomic, strong) UILabel *contentTextNode;
 @property (nonatomic, strong) UIView *underLineNode;
-//@property (nonatomic, strong) NewsCommentReplyAreaNode *commentReplyAreaNode;
-//Data
-@property (nonatomic, strong) NewsCommentItem *commentItem;
 
-@property (nonatomic, strong) NSDictionary *commentItemsDict;
-@property (nonatomic, strong) NSArray *commentIdsArray;
-
-
-
-
-
-
-
-//@property (nonatomic, strong) UILabel *nameTextNode;
 @property (nonatomic, strong) UILabel *floorTextNode;
-//@property (nonatomic, strong) UILabel *contentTextNode;
-//@property (nonatomic, strong) UIView *underLineNode;
-
-
-
-
-
-
 
 
 @end
@@ -74,40 +53,9 @@
     return self;
 }
 
-
-//- (instancetype)initWithcommentModel:(CommentInfoModel *)model floor:(NSInteger)floor{
-//    
-//    
-//    self = [super init];
-//    if (self) {
-//        _model = model;
-//        _floor = floor;
-//        [self addSubnodes];
-//        [self mas_subViews];
-//        [self loadData];
-//    }
-//    return self;
-//    
-//}
-
-
 #pragma mark - private
 - (void)addSubnodes
 {
-//    [self.contentView addSubview:self.imageNode];
-//
-//    [self.contentView addSubview:self.nameTextNode];
-//
-//    [self.contentView addSubview:self.locationTextNode];
-//
-//    [self.contentView addSubview:self.voteBtnNode];
-//
-//    [self.contentView addSubview:self.contentTextNode];
-//
-////    [self.contentView addSubview:self.commentReplyAreaNode];
-//
-//    [self.contentView addSubview:self.underLineNode];
-    
     [self addSubview:self.nameTextNode];
     
     [self addSubview:self.floorTextNode];
@@ -119,51 +67,7 @@
 
 - (void)mas_subViews
 {
-//    [_imageNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.height.mas_equalTo(40);
-//        make.top.equalTo(self.contentView).offset(10);
-//        make.left.equalTo(self.contentView).offset(10);
-//    }];
-//
-//    [_voteBtnNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.mas_equalTo(50);
-//        make.height.mas_equalTo(20);
-//        make.top.equalTo(_imageNode);
-//        make.right.equalTo(self.contentView).offset(-10);
-//    }];
-//
-//    [_nameTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_imageNode);
-//        make.left.equalTo(_imageNode.mas_right).offset(10);
-//        make.right.equalTo(_voteBtnNode.mas_left).offset(-10);
-//    }];
-//
-//    [_locationTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.right.equalTo(_nameTextNode);
-//        make.bottom.equalTo(_imageNode.mas_bottom);
-//    }];
-//
-//
-//    [_contentTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_imageNode.mas_bottom).offset(10);
-//        make.left.equalTo(_nameTextNode);
-//        make.right.equalTo(_voteBtnNode);
-//    }];
-//
-////    [_commentReplyAreaNode mas_makeConstraints:^(MASConstraintMaker *make) {
-////        make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
-////        make.left.equalTo(_nameTextNode);
-////        make.right.equalTo(_voteBtnNode);
-////    }];
-//
-//
-//
-//    [_underLineNode mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.mas_equalTo(0.5);
-//        make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
-//        make.left.right.bottom.equalTo(self.contentView);
-//    }];
-    
+
     [_floorTextNode mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(30).priorityLow();
         make.top.equalTo(self).offset(4);
@@ -200,37 +104,6 @@
         _contentTextNode.text = model.replyContent;
 
 }
-
-//-(void)setupCommentItemsModel:(MessageInfoModel *)model{
-//
-//
-//    [self.imageNode sd_setImageWithURL:[NSURL URLWithString:model.avatar] placeholderImage:[UIImage imageNamed:@"defult_pho"]];
-//
-//    _nameTextNode.text = model.nickName ? model.nickName : @"火星网友";
-//        _locationTextNode.text = @"地址";//_commentItem.user.location ? _commentItem.user.location : @"火星";
-//        [_voteBtnNode setTitle:[NSString stringWithFormat:@"%@顶",model.praiseCount] forState:UIControlStateNormal];
-//        _contentTextNode.text = model.content;
-////
-////
-////    NSArray *replyList  = model.replyList;
-////
-////        if (replyList.count > 1) {
-////            [_commentReplyAreaNode mas_remakeConstraints:^(MASConstraintMaker *make) {
-////                make.top.equalTo(_contentTextNode.mas_bottom).offset(10);
-////                make.left.equalTo(_nameTextNode);
-////                make.right.equalTo(_voteBtnNode);
-////            }];
-////        }else{
-////            [_contentTextNode mas_remakeConstraints:^(MASConstraintMaker *make) {
-////                make.top.equalTo(_imageNode.mas_bottom).offset(10);
-////                make.left.equalTo(_nameTextNode);
-////                make.right.equalTo(_voteBtnNode);
-////            }];
-////        }
-////
-////
-////    [_commentReplyAreaNode setupCommentItemsArr:replyList];
-//}
 
 
 
@@ -282,14 +155,6 @@
     return _voteBtnNode;
 }
 
-//- (NewsCommentReplyAreaNode *)commentReplyAreaNode
-//{
-//    if (!_commentReplyAreaNode) {
-//        NewsCommentReplyAreaNode *commentReplyAreaNode = [[NewsCommentReplyAreaNode alloc] init];
-//        _commentReplyAreaNode = commentReplyAreaNode;
-//    }
-//    return _commentReplyAreaNode;
-//}
 
 - (UILabel *)contentTextNode
 {

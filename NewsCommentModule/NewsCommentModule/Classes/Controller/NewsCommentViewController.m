@@ -19,7 +19,9 @@
 
 #import "MessageInfoModel.h"
 #import "CommentInfoModel.h"
+#import "NewsCommentReplyCellNode.h"
 
+#import "ZBContentView.h"
 
 @interface NewsCommentViewController ()<UITableViewDelegate, UITableViewDataSource>
 //UI
@@ -51,6 +53,7 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
     [self initParams];
     [self addTableNode];
     [self loadData];
+    
 }
 
 #pragma mark - init
@@ -195,87 +198,101 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
 #pragma mark - tableView dataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return self.latestCommentArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (0 == section) {
-        return _hotComments.commentIds.count;
-    }else{
-        return self.latestCommentArr.count;
-    }
+//    if (0 == section) {
+//        return _hotComments.commentIds.count;
+//    }else{
+//        return self.latestCommentArr.count;
+//    }
+    
+    MessageInfoModel *messageModel = [self.latestCommentArr safeObjectAtIndex:section];
+    
+    return messageModel.replyList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NewsCommentCellNode *cell = [NewsCommentCellNode cellWithTableView:tableView];
-    if (0 == indexPath.section) {
-//        [cell setupCommentItems:_hotComments.comments commmentIds:_hotComments.commentIds[indexPath.row]];
-    }else{
-//        [cell setupCommentItems:_latestComments.comments commmentIds:_latestComments.commentIds[indexPath.row]];
-       MessageInfoModel *model = [self.latestCommentArr safeObjectAtIndex:indexPath.row];
-       [cell setupCommentItemsModel:model];
-        
-    }
+    NewsCommentReplyCellNode *cell = [NewsCommentReplyCellNode cellWithTableView:tableView];
+//    if (0 == indexPath.section) {
+////        [cell setupCommentItems:_hotComments.comments commmentIds:_hotComments.commentIds[indexPath.row]];
+//    }else{
+////        [cell setupCommentItems:_latestComments.comments commmentIds:_latestComments.commentIds[indexPath.row]];
+//       MessageInfoModel *model = [self.latestCommentArr safeObjectAtIndex:indexPath.row];
+//       [cell setupCommentItemsModel:model];
+//
+//    }
+    
+    MessageInfoModel *model = [self.latestCommentArr safeObjectAtIndex:indexPath.section];
+    CommentInfoModel *infoModel = [model.replyList safeObjectAtIndex:indexPath.row];
+    [cell setupCommentItemsModel:infoModel];
     return cell;
 }
+
+
 
 #pragma mark - tableView delegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NewsCommentSectionTitleHeader *headerView = [NewsCommentSectionTitleHeader sectionHeaderWithTableView:tableView];
 
-    switch (section) {
-        case 0:
-        {
-            if (_hotComments.comments.count > 0) {
-                headerView.title = @"热门跟帖";
-            }else{
-                return nil;
-            }
-            
-        }
-            break;
-        case 1:
-        {
-            if (self.latestCommentArr.count > 0) {
-                headerView.title = @"最新跟帖";
-            }else{
-                return nil;
-            }
-        }
-            break;
-        default:
-            return nil;
-            break;
-    }
+    MessageInfoModel *messageModel = [self.latestCommentArr safeObjectAtIndex:section];
+    
+    [headerView setupCommentItemsModel:messageModel];
+    
+//    switch (section) {
+//        case 0:
+//        {
+//            if (_hotComments.comments.count > 0) {
+//                headerView.title = @"热门跟帖";
+//            }else{
+//                return nil;
+//            }
+//
+//        }
+//            break;
+//        case 1:
+//        {
+//            if (self.latestCommentArr.count > 0) {
+//                headerView.title = @"最新跟帖";
+//            }else{
+//                return nil;
+//            }
+//        }
+//            break;
+//        default:
+//            return nil;
+//            break;
+//    }
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    switch (section) {
-        case 0:
-        {
-            if (_hotComments.comments.count > 0) {
-                return 30;
-            }
-        }
-            break;
-        case 1:
-        {
-            if (self.latestCommentArr.count > 0) {
-                return 30;
-            }
-        }
-            break;
-        default:
-            return CGFLOAT_MIN;
-            break;
-    }
-    return CGFLOAT_MIN;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+////    switch (section) {
+////        case 0:
+////        {
+////            if (_hotComments.comments.count > 0) {
+////                return 30;
+////            }
+////        }
+////            break;
+////        case 1:
+////        {
+////            if (self.latestCommentArr.count > 0) {
+////                return 30;
+////            }
+////        }
+////            break;
+////        default:
+////            return CGFLOAT_MIN;
+////            break;
+////    }
+//    return 200;
+//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
@@ -285,6 +302,15 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return CGFLOAT_MIN;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSLog(@"didSelectRowAtIndexPath -- %ld",(long)indexPath.section);
+    MessageInfoModel *messageModel = [self.latestCommentArr safeObjectAtIndex:indexPath.section];
+    
+    messageModel.content = @"我哈哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈哈";
+    [self.tableNode reloadData];
 }
 
 #pragma mark -  setter / getter
