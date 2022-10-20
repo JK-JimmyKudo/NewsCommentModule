@@ -70,10 +70,10 @@
 //
 //
     
-//    NewsCommentViewController *viewController = [[NewsCommentViewController alloc] init];
-////    viewController.newsID = self.newsIDTextField.text;
-//    [self.navigationController pushViewController:viewController animated:YES];
-//
+    NewsCommentViewController *viewController = [[NewsCommentViewController alloc] init];
+//    viewController.newsID = self.newsIDTextField.text;
+    [self.navigationController pushViewController:viewController animated:YES];
+
     
     
     MessageInfoModel *messageModel = [[MessageInfoModel alloc] init];

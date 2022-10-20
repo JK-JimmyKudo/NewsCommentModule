@@ -78,10 +78,10 @@ NSString * const NewsLatestCommentHost = @"/news/v2/newtie";
 - (void)build {
     
     NSMutableArray *modelData = [NSMutableArray array];
-    for (int i = 0;i < 25;i++) {
+    for (int i = 0;i < 10;i++) {
         MessageInfoModel *messageModel = [[MessageInfoModel alloc] init];
         messageModel.userId = [NSString stringWithFormat:@"100%d",i];
-        messageModel.content = @"这里是评论内容哦";
+        messageModel.content = @"这里是评论内容哦的简欧京东我囧囧的菜农完成无IC从你从你我我哦长尾词那我IC你未成年望长城内外集成呢我才能我哪次";
         messageModel.commentTime = @"2018-02-03";
         messageModel.praiseCount = [NSString stringWithFormat:@"%d",i];
         messageModel.nickName = [NSString stringWithFormat:@"我是昵称%d",i];
