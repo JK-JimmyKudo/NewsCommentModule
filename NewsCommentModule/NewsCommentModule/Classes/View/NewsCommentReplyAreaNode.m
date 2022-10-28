@@ -35,7 +35,7 @@
         self.backgroundColor = VKColorRGB(248, 249, 241);
         self.layer.borderColor = VKColorRGB(218, 218, 218).CGColor;
         self.layer.borderWidth = 0.5;
-//        [self addTableNode];
+        [self addTableNode];
     }
     return self;
 }
@@ -46,9 +46,10 @@
     [self addSubview:self.tableNode];
     //使用masonry刷新横竖屏切换布局
     [_tableNode mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self);
+//        make.edges.equalTo(self);
+        make.edges.equalTo(self).insets(UIEdgeInsetsMake(15, 15, 15, 15));
 //        make.top.equalTo(self);
-//        make.height.greaterThanOrEqualTo(@300);
+        make.height.greaterThanOrEqualTo(@10);
 ////        make.bottom.equalTo(self);
     }];
 }
@@ -108,12 +109,29 @@
 -(void)setupCommentItemsArr:(NSArray *)replyList{
     self.replyList = [NSArray array];
     self.replyList = replyList;
+    [self.tableNode layoutIfNeeded];
     [self.tableNode reloadData];
 
+    // 更新约束
+    [self.tableNode mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self).insets(UIEdgeInsetsMake(10, 10, 10, 10));
+    }];
+    
+    // 告诉约束需要更新，但不会立即更新，
+    [self.tableNode.superview setNeedsUpdateConstraints];
+    [self.tableNode setNeedsUpdateConstraints];
+    // 检测当前视图及其子视图是否需要更新约束
+    [self.tableNode updateConstraintsIfNeeded];
+    [UIView animateWithDuration:0.4 animations:^{
+        // 立即更新约束
+        [self.tableNode layoutIfNeeded];
+    }];
+    
+    
 //
-    [self removeAllSubviews];
+//    [self removeAllSubviews];
 //    [self addTableNode];
-    [self addNewSubnodes];
+//    [self addNewSubnodes];
     
 }
 - (void)removeAllSubviews {

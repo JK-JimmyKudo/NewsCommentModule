@@ -13,6 +13,7 @@
 		8508074528FFCCFD008415B6 /* NSArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 8508074328FFCCFC008415B6 /* NSArray+Safe.m */; };
 		8508074828FFFE76008415B6 /* ZBContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8508074728FFFE76008415B6 /* ZBContentView.m */; };
 		8508074B2900E384008415B6 /* NewsCommentReplyCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8508074A2900E384008415B6 /* NewsCommentReplyCellNode.m */; };
+		8586BAC8290BB6EA008F9FA3 /* BOTEmptyObjectFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8586BAC7290BB6EA008F9FA3 /* BOTEmptyObjectFile.m */; };
 		85A1DCAB28FE7D8C00CCB8C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A1DCAA28FE7D8C00CCB8C5 /* AppDelegate.m */; };
 		85A1DCB128FE7D8C00CCB8C5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A1DCB028FE7D8C00CCB8C5 /* ViewController.m */; };
 		85A1DCB428FE7D8C00CCB8C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A1DCB228FE7D8C00CCB8C5 /* Main.storyboard */; };
@@ -66,6 +67,8 @@
 		8508074728FFFE76008415B6 /* ZBContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBContentView.m; sourceTree = "<group>"; };
 		850807492900E384008415B6 /* NewsCommentReplyCellNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsCommentReplyCellNode.h; sourceTree = "<group>"; };
 		8508074A2900E384008415B6 /* NewsCommentReplyCellNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsCommentReplyCellNode.m; sourceTree = "<group>"; };
+		8586BAC6290BB6E9008F9FA3 /* BOTEmptyObjectFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BOTEmptyObjectFile.h; sourceTree = "<group>"; };
+		8586BAC7290BB6EA008F9FA3 /* BOTEmptyObjectFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BOTEmptyObjectFile.m; sourceTree = "<group>"; };
 		85A1DCA628FE7D8B00CCB8C5 /* NewsCommentModule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsCommentModule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A1DCA928FE7D8C00CCB8C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		85A1DCAA28FE7D8C00CCB8C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 				85A1DE2E28FEADE300CCB8C5 /* UIColor+VK.m */,
 				85A1DE2F28FEADE300CCB8C5 /* UIView+VK.m */,
 				85A1DE3028FEADE300CCB8C5 /* UIColor+VK.h */,
+				8586BAC6290BB6E9008F9FA3 /* BOTEmptyObjectFile.h */,
+				8586BAC7290BB6EA008F9FA3 /* BOTEmptyObjectFile.m */,
 			);
 			path = VKKit;
 			sourceTree = "<group>";
@@ -541,6 +546,7 @@
 				85A1DCF828FEA7D300CCB8C5 /* NewsCommentViewController.m in Sources */,
 				85A1DCB128FE7D8C00CCB8C5 /* ViewController.m in Sources */,
 				8508074B2900E384008415B6 /* NewsCommentReplyCellNode.m in Sources */,
+				8586BAC8290BB6EA008F9FA3 /* BOTEmptyObjectFile.m in Sources */,
 				85A1DCFE28FEA7D300CCB8C5 /* NewsCommentSectionTitleHeader.m in Sources */,
 				85A1DCFC28FEA7D300CCB8C5 /* NewsCommentCellNode.m in Sources */,
 				85A1DCFA28FEA7D300CCB8C5 /* MessageInfoModel.m in Sources */,

@@ -12,6 +12,9 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
 
+#define kScreenWidth          [[UIScreen mainScreen] bounds].size.width
+#define HomePage_Collection_Cell_Title_FrameWidth ((kScreenWidth))
+
 #define ZBRandomColor [UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0]
 
 //弱指针self
@@ -34,7 +37,7 @@
 
 //----------------------- 公共头文件引用 -----------------------
 #import "NSArray+Safe.h"
-
+#import "BOTEmptyObjectFile.h"
 
 
 
