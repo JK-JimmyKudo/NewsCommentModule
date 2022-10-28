@@ -22,6 +22,10 @@
 
 
 @property (nonatomic, strong) NewsCommentReplyAreaNode *commentReplyAreaNode;
+
+
+@property (nonatomic,strong) NSMutableArray *inputData;
+
 @end
 
 @implementation ViewController
@@ -43,8 +47,8 @@
         nameTextNode.text = @"#物业费回馈季#储奶袋看基础你觉得呢从杰克丹尼曾经的你曾经的你cdjncjdncdjncdjnc内存卡电脑查看带你吃nckdnckdnc    ncdncdknc    kcnkdnckdnc   cndknckdnckdnckdn  nnn";
         
         
-        CGFloat TitleHeight = [self calculateTitleHeight:nameTextNode.text];
-         NSLog(@"TitleHeight -- %f",TitleHeight);
+        CGFloat TitleHeight = [BOTEmptyObjectFile calculateTitleHeight:nameTextNode.text widthSize:10];
+//        NSLog(@"TitleHeight -- %f",TitleHeight);
         
         nameTextNode.frame = CGRectMake(10, 100, SCREEN_WIDTH - 20, TitleHeight);
         [self.view addSubview:nameTextNode];
@@ -59,14 +63,14 @@
     nameTextNode.text = @"#物业费回馈季#";
     
     
-    CGFloat TitleHeight = [self calculateTitleWidth:nameTextNode.text];
-     NSLog(@"TitleHeight -- %f",TitleHeight);
+    CGFloat TitleHeight = [BOTEmptyObjectFile calculateTitleWidth:nameTextNode.text widthSize:10];
+//    NSLog(@"TitleHeight -- %f",TitleHeight);
     
-    nameTextNode.frame = CGRectMake(10, 250, TitleHeight, 30);
+    nameTextNode.frame = CGRectMake(10, 150, TitleHeight, 30);
     [self.view addSubview:nameTextNode];
     
     
-    [self clipCornerWithView:nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:10];
+    [BOTEmptyObjectFile clipCornerWithView:nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:10];
     
     //    // 创建scrollView
     //        UIScrollView *scrollView = [[UIScrollView alloc] init];;
@@ -157,44 +161,44 @@
         make.left.equalTo(contentView).offset(10);
         make.right.equalTo(contentView).offset(-10);
         //        make.width.mas_equalTo(200);
-//        make.height.mas_equalTo(30);
+        //        make.height.mas_equalTo(30);
     }];
     
     
     [_nameTextNode sizeToFit];
     CGFloat width = ceil(_nameTextNode.frame.size.height) + 1;
-    NSLog(@"width -- %f",width);
+//    NSLog(@"width -- %f",width);
     
     [_nameTextNode layoutIfNeeded];// 下面会有关于layoutIfNeeded的介绍
     CGFloat ttagViewHeight = self.nameTextNode.height;
     
-    NSLog(@"ttagViewHeight -- %f",ttagViewHeight);
+//    NSLog(@"ttagViewHeight -- %f",ttagViewHeight);
     
     _nameTextNode.backgroundColor = [UIColor redColor];
-    [self clipCornerWithView:_nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:5];
+    [BOTEmptyObjectFile clipCornerWithView:_nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:5];
     
-   
+    
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         self.nameTextNode.font = [UIFont systemFontOfSize:15];
         [_nameTextNode layoutIfNeeded];
-        [self clipCornerWithView:_nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:5];
+        [BOTEmptyObjectFile clipCornerWithView:_nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:5];
         
         
         [_nameTextNode sizeToFit];
         CGFloat width = ceil(_nameTextNode.frame.size.width) + 1;
-        NSLog(@"width -- %f",width);
+//        NSLog(@"width -- %f",width);
         
         
         CGFloat ttagViewHeight = self.nameTextNode.width;
-        NSLog(@"ttagViewHeight -- %f",ttagViewHeight);
+//        NSLog(@"ttagViewHeight -- %f",ttagViewHeight);
         
         nameTextNode.font = [UIFont systemFontOfSize:15];
-        CGFloat TitleHeight = [self calculateTitleWidth:nameTextNode.text];
-        NSLog(@"TitleHeight -- %f",TitleHeight);
+        CGFloat TitleHeight = [BOTEmptyObjectFile calculateTitleWidth:nameTextNode.text widthSize:10];
+//        NSLog(@"TitleHeight -- %f",TitleHeight);
         nameTextNode.frame = CGRectMake(10, 150, TitleHeight + 10, 30);
-        [self clipCornerWithView:nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:10];
+        [BOTEmptyObjectFile clipCornerWithView:nameTextNode andTopLeft:YES andTopRight:NO andBottomLeft:NO andBottomRight:YES radius:10];
     });
     
     
@@ -231,6 +235,9 @@
     
     [_commentReplyAreaNode setupCommentItemsArr:arr];
     
+    
+    [self build];
+    
 }
 
 - (UILabel *)nameTextNode
@@ -257,94 +264,172 @@
 }
 
 
-//切指定角的圆角
-- (UIView *)clipCornerWithView:(UIView *)originView
-                    andTopLeft:(BOOL)topLeft
-                   andTopRight:(BOOL)topRight
-                 andBottomLeft:(BOOL)bottomLeft
-                andBottomRight:(BOOL)bottomRight radius:(CGFloat)radius{
+
+- (void)build {
+    self.inputData = [NSMutableArray array];
+    NSMutableArray *modelData = [NSMutableArray array];
     
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:originView.bounds
-                                                   byRoundingCorners:(topLeft==YES ? UIRectCornerTopLeft : 0) |
-                              (topRight==YES ? UIRectCornerTopRight : 0) |
-                              (bottomLeft==YES ? UIRectCornerBottomLeft : 0) |
-                              (bottomRight==YES ? UIRectCornerBottomRight : 0)
-                                                         cornerRadii:CGSizeMake(radius, radius)];
-    // 创建遮罩层
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = originView.bounds;
-    maskLayer.path = maskPath.CGPath;   // 轨迹
-    originView.layer.mask = maskLayer;
+    MessageInfoModel *messageModel = [[MessageInfoModel alloc] init];
+    messageModel.userId = [NSString stringWithFormat:@"100%d",0];
+    messageModel.content = @"这里是评论内容哦的简欧京东我囧囧的菜农完成无IC从你从你我我哦长尾词那我IC你未成年望长城内外集成呢我才能我哪次";
+    messageModel.commentTime = @"2018-02-03";
+    messageModel.praiseCount = [NSString stringWithFormat:@"%d",0];
+    messageModel.nickName = [NSString stringWithFormat:@"我是昵称%d",0];
+    messageModel.avatar = @"https://img2.baidu.com/it/u=1814268193,3619863984&fm=253&fmt=auto&app=138&f=JPEG?w=632&h=500";  //  头像图片
+    messageModel.praised = @"1";
+    messageModel.commentId = [NSString stringWithFormat:@"200%d",0];
     
-    return originView;
+    
+    
+    MessageInfoModel *messageModel1 = [[MessageInfoModel alloc] init];
+    messageModel1.commentTime = @"2018-02-01";
+    messageModel1.nickName = [NSString stringWithFormat:@"我是昵称%d",1];
+    
+
+    
+    
+    
+    MessageInfoModel *messageModel2 = [[MessageInfoModel alloc] init];
+    messageModel2.commentTime = @"2018-02-10";
+    messageModel2.nickName = [NSString stringWithFormat:@"我是昵称%d",2];
+    
+    
+    
+    MessageInfoModel *messageModel3 = [[MessageInfoModel alloc] init];
+    messageModel3.commentTime = @"2018-02-05";
+    messageModel3.nickName = [NSString stringWithFormat:@"我是昵称%d",1];
+    
+    
+    
+    MessageInfoModel *messageModel4 = [[MessageInfoModel alloc] init];
+    messageModel4.commentTime = @"2018-02-04";
+    messageModel4.nickName = [NSString stringWithFormat:@"我是昵称%d",1];
+    
+    
+    
+    MessageInfoModel *messageModel5 = [[MessageInfoModel alloc] init];
+    messageModel5.commentTime = @"2018-02-08";
+    messageModel5.nickName = [NSString stringWithFormat:@"我是昵称%d",1];
+    
+    MessageInfoModel *messageModel6 = [[MessageInfoModel alloc] init];
+    messageModel6.commentTime = @"2018-02-01";
+    messageModel6.nickName = [NSString stringWithFormat:@"我是昵称%d",1];
+    
+    
+    [modelData addObject:messageModel];
+    [modelData addObject:messageModel1];
+    [modelData addObject:messageModel2];
+    [modelData addObject:messageModel3];
+    [modelData addObject:messageModel4];
+    [modelData addObject:messageModel5];
+    [modelData addObject:messageModel6];
+    
+    
+    self.inputData = modelData;
+    
+    
+  self.inputData = [BOTEmptyObjectFile arrayWithTimeSeq:modelData];
+    
+    NSLog(@" self.inputData  ==  %@", [self.inputData yy_modelToJSONObject]);
+    
+    
+    
 }
 
 
-/*
- 计算文字的高度：
- */
-- (CGFloat)calculateTitleHeight:(NSString*)strTitle {
-    NSLog(@"calculateTitleHeight: %@", strTitle);
-    // 计算出每个Cell的高度
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc]initWithString:strTitle];
-    
-    UIFont *font = [UIFont systemFontOfSize:17.0];
-    
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    // TODO: 行间距可以设置成动态的
-    style.lineSpacing = 2; // [self.lineSpaceTextField.text integerValue];
-    
-    [attributeString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, strTitle.length)];
-    
-    [attributeString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, strTitle.length)];
-    
-//    self.showTextLabel.attributedText = attributeString;
+
+
+
+
+
+////切指定角的圆角
+//- (UIView *)clipCornerWithView:(UIView *)originView
+//                    andTopLeft:(BOOL)topLeft
+//                   andTopRight:(BOOL)topRight
+//                 andBottomLeft:(BOOL)bottomLeft
+//                andBottomRight:(BOOL)bottomRight radius:(CGFloat)radius{
+//    
+//    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:originView.bounds
+//                                                   byRoundingCorners:(topLeft==YES ? UIRectCornerTopLeft : 0) |
+//                              (topRight==YES ? UIRectCornerTopRight : 0) |
+//                              (bottomLeft==YES ? UIRectCornerBottomLeft : 0) |
+//                              (bottomRight==YES ? UIRectCornerBottomRight : 0)
+//                                                         cornerRadii:CGSizeMake(radius, radius)];
+//    // 创建遮罩层
+//    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+//    maskLayer.frame = originView.bounds;
+//    maskLayer.path = maskPath.CGPath;   // 轨迹
+//    originView.layer.mask = maskLayer;
+//    
+//    return originView;
+//}
 //
-//    //        NSLog(@"textView.text.length:%lf", textView.text.length)
-    
-    
-    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    
-    CGFloat boundingRectHeight = [attributeString boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, MAXFLOAT) options:options context:nil].size.height;
-    
-    if ([attributeString.string isEqualToString:@""] || [attributeString.string isEqualToString:@"(null)"]) {
-        boundingRectHeight = 0;
-    }
-    NSLog(@"boundingRectHeight: %lf", boundingRectHeight);
-    return boundingRectHeight;
-}
-
-/*
- 计算文字的宽度
- */
-- (CGFloat)calculateTitleWidth:(NSString*)strTitle {
-    NSLog(@"calculateTitleHeight: %@", strTitle);
-    // 计算出每个Cell的高度
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc]initWithString:strTitle];
-    
-    UIFont *font = [UIFont systemFontOfSize:17.0];
-    
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    // TODO: 行间距可以设置成动态的
-    style.lineSpacing = 2; // [self.lineSpaceTextField.text integerValue];
-    
-    [attributeString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, strTitle.length)];
-    
-    [attributeString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, strTitle.length)];
-    
-//    self.showTextLabel.attributedText = attributeString;
 //
-//    //        NSLog(@"textView.text.length:%lf", textView.text.length)
-    
-    
-    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    
-    CGFloat boundingRectHeight = [attributeString boundingRectWithSize:CGSizeMake(HomePage_Collection_Cell_Title_FrameWidth, MAXFLOAT) options:options context:nil].size.width;
-    
-    if ([attributeString.string isEqualToString:@""] || [attributeString.string isEqualToString:@"(null)"]) {
-        boundingRectHeight = 0;
-    }
-    NSLog(@"boundingRectHeight: %lf", boundingRectHeight);
-    return boundingRectHeight;
-}
+///*
+// 计算文字的高度：
+// */
+//- (CGFloat)calculateTitleHeight:(NSString*)strTitle {
+//    NSLog(@"calculateTitleHeight: %@", strTitle);
+//    // 计算出每个Cell的高度
+//    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc]initWithString:strTitle];
+//    
+//    UIFont *font = [UIFont systemFontOfSize:17.0];
+//    
+//    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+//    // TODO: 行间距可以设置成动态的
+//    style.lineSpacing = 2; // [self.lineSpaceTextField.text integerValue];
+//    
+//    [attributeString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, strTitle.length)];
+//    
+//    [attributeString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, strTitle.length)];
+//    
+////    self.showTextLabel.attributedText = attributeString;
+////
+////    //        NSLog(@"textView.text.length:%lf", textView.text.length)
+//    
+//    
+//    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+//    
+//    CGFloat boundingRectHeight = [attributeString boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, MAXFLOAT) options:options context:nil].size.height;
+//    
+//    if ([attributeString.string isEqualToString:@""] || [attributeString.string isEqualToString:@"(null)"]) {
+//        boundingRectHeight = 0;
+//    }
+//    NSLog(@"boundingRectHeight: %lf", boundingRectHeight);
+//    return boundingRectHeight;
+//}
+//
+///*
+// 计算文字的宽度
+// */
+//- (CGFloat)calculateTitleWidth:(NSString*)strTitle {
+//    NSLog(@"calculateTitleHeight: %@", strTitle);
+//    // 计算出每个Cell的高度
+//    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc]initWithString:strTitle];
+//    
+//    UIFont *font = [UIFont systemFontOfSize:17.0];
+//    
+//    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+//    // TODO: 行间距可以设置成动态的
+//    style.lineSpacing = 2; // [self.lineSpaceTextField.text integerValue];
+//    
+//    [attributeString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, strTitle.length)];
+//    
+//    [attributeString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, strTitle.length)];
+//    
+////    self.showTextLabel.attributedText = attributeString;
+////
+////    //        NSLog(@"textView.text.length:%lf", textView.text.length)
+//    
+//    
+//    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+//    
+//    CGFloat boundingRectHeight = [attributeString boundingRectWithSize:CGSizeMake(HomePage_Collection_Cell_Title_FrameWidth, MAXFLOAT) options:options context:nil].size.width;
+//    
+//    if ([attributeString.string isEqualToString:@""] || [attributeString.string isEqualToString:@"(null)"]) {
+//        boundingRectHeight = 0;
+//    }
+//    NSLog(@"boundingRectHeight: %lf", boundingRectHeight);
+//    return boundingRectHeight;
+//}
 @end

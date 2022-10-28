@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "MessageInfoModel.h"
+#import "HYTimeManager.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BOTEmptyObjectFile : NSObject
@@ -24,13 +26,16 @@ NS_ASSUME_NONNULL_BEGIN
 + (CGFloat)calculateTitleHeight:(NSString*)strTitle widthSize:(CGFloat)width;
 
 //切指定角的圆角
-+ (void)clipCornerWithView:(UIView *)originView
++ (UIView *)clipCornerWithView:(UIView *)originView
                     andTopLeft:(BOOL)topLeft
                    andTopRight:(BOOL)topRight
                  andBottomLeft:(BOOL)bottomLeft
             andBottomRight:(BOOL)bottomRight radius:(CGFloat)radius;
 
 
+/// iOS 数组按时间戳降序排序
+/// @param inputData
++ (NSMutableArray *)arrayWithTimeSeq:(NSMutableArray*)inputData;
 @end
 
 NS_ASSUME_NONNULL_END
