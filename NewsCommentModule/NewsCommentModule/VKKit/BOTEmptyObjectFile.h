@@ -36,6 +36,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// iOS 数组按时间戳降序排序
 /// @param inputData
 + (NSMutableArray *)arrayWithTimeSeq:(NSMutableArray*)inputData;
+
++(NSMutableArray *)getNewDataList:(NSMutableArray *)dataArr;
+
++ (NSMutableDictionary *)getNewDicnewDataList:(NSMutableArray *)dataArr;
++(NSMutableArray *)distinguishArrayWithArray:(NSArray *)dataSource;
 @end
 
 NS_ASSUME_NONNULL_END

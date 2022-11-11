@@ -328,12 +328,16 @@
     self.inputData = modelData;
     
     
-  self.inputData = [BOTEmptyObjectFile arrayWithTimeSeq:modelData];
+//  self.inputData = [BOTEmptyObjectFile arrayWithTimeSeq:modelData];
     
-    NSLog(@" self.inputData  ==  %@", [self.inputData yy_modelToJSONObject]);
+//    NSLog(@" self.inputData  ==  %@", [self.inputData yy_modelToJSONObject]);
     
+    NSMutableArray *inputData = [BOTEmptyObjectFile getNewDataList:modelData];
     
+//    NSLog(@" inputData  ==  %@", inputData);
+    [BOTEmptyObjectFile getNewDicnewDataList: modelData];
     
+    [BOTEmptyObjectFile distinguishArrayWithArray:modelData];
 }
 
 
